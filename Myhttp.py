@@ -23,7 +23,7 @@ class Communication(object):
         binary_data = params.encode()
 
         try:
-            data = urllib.request.urlopen(Communication.url_t+routes, binary_data).read()
+            data = urllib.request.urlopen(Communication.url+routes, binary_data).read()
         except Exception as e:
             print(e)
 
@@ -36,7 +36,7 @@ class Communication(object):
         })
         binary_data = params.encode()
         try:
-            data = urllib.request.urlopen(Communication.url_t + routes, binary_data).read()
+            data = urllib.request.urlopen(Communication.url + routes, binary_data).read()
         except Exception as e:
             print(e)
 
@@ -45,7 +45,7 @@ class Communication(object):
         routes = "/account?u_id="+my_id+"&u_pw="+my_pw
         try:
 
-            data = urllib.request.urlopen(Communication.url_t + routes).read()
+            data = urllib.request.urlopen(Communication.url + routes).read()
         except Exception as e:
             print(e)
 
@@ -60,7 +60,7 @@ class Communication(object):
         })
         binary_data = params.encode()
         try:
-            data = urllib.request.urlopen(Communication.url_t + routes, binary_data).read()
+            data = urllib.request.urlopen(Communication.url + routes, binary_data).read()
         except Exception as e:
             print(e)
 

@@ -56,8 +56,8 @@ def get_ip_address(): # IP Address function
 class Ui_MainWindow(object):
 
     friends = []
-    cpu_data = []
-    ram_data = []
+    cpu_data = [0 for i in range(10)]
+    ram_data = [0 for i in range(10)]
 
     def __init__(self, mainwindow):
         super().__init__()
