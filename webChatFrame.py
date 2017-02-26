@@ -11,6 +11,7 @@ from Util import MyYaml
 class WebChatFrame(LoginFrame):
 
     url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
+    url_t = 'http://localhost:3000'
 
     @staticmethod
     def init(main_widget,my_id = '', oppenent_id = ''):

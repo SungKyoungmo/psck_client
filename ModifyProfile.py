@@ -5,6 +5,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtCore import QFileInfo
 import model.User
+from Myhttp import Communication
+
 
 class ModifyProfile(object):
 
@@ -108,6 +110,9 @@ class ModifyProfile(object):
             newImageFile = QFileInfo(info.absoluteDir(),
                                      'profile_'+ '.png').absoluteFilePath()
 #model.User.u_id()
+
+            Communication.profile(info.absoluteDir())
+
             if not ModifyProfile.label_img.pixmap().save(newImageFile, 'PNG'):
                 QtWidgets.QMessageBox.warning(ModifyProfile.qwidget, "Cannot save file",
                                     "The file could not be saved.",

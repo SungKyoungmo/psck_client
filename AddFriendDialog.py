@@ -7,9 +7,12 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import MainFrame
+
+from FailDialog import FailDialog
 from DeviceinfoThread import DeviceInfoThread
+from Myhttp import FriendCommunication
 from model.Device import DeviceInfo
+from model.User import User
 
 
 class AddFriendDialog(object):
@@ -64,8 +67,11 @@ class AddFriendDialog(object):
 
     @staticmethod
     def widget_show():
-        AddFriendDialog.Dialog.show()
-
+        if User.is_login():
+            AddFriendDialog.Dialog.show()
+        else:
+            FailDialog.retranslateUi('Fail', 'Login First')
+            FailDialog.widget_show()
     @staticmethod
     def widget_hide():
         AddFriendDialog.Dialog.hide()
@@ -73,10 +79,20 @@ class AddFriendDialog(object):
     @staticmethod
     def ok_btn_click():
 
-        DeviceInfoThread.friend_device_info.append(DeviceInfo(AddFriendDialog.lineEdit.text(), AddFriendDialog.lineEdit.text()))
+        result = FriendCommunication.add(User.u_id, AddFriendDialog.lineEdit.text())
 
-        AddFriendDialog.main_window.listwidget_item()
-        AddFriendDialog.widget_hide()
+        if result['success']:
+            DeviceInfoThread.friend_device_info.append(
+            DeviceInfo(AddFriendDialog.lineEdit.text(), AddFriendDialog.lineEdit.text()))
+
+            AddFriendDialog.main_window.listwidget_item()
+
+            AddFriendDialog.widget_hide()
+        else:
+            FailDialog.retranslateUi('Fail', result['message'])
+            FailDialog.widget_show()
+
+
 
     @staticmethod
     def cancel_btn_click():

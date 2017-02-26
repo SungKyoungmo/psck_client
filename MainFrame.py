@@ -312,14 +312,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "HackerViewer"))
         __sortingEnabled = self.listWidget.isSortingEnabled()
         self.listWidget.setSortingEnabled(False)
-
-        DeviceInfoThread.friend_device_info.append(DeviceInfo('Sung Kyungmo', 'sung'))
-        DeviceInfoThread.friend_device_info.append(DeviceInfo('Park Minwoo', 'pmw9027'))
-        DeviceInfoThread.friend_device_info.append(DeviceInfo('Choi Jinseok', 'choi'))
-        DeviceInfoThread.friend_device_info.append(DeviceInfo('Kim Heejoong', 'theway'))
-
-        self.listwidget_item()
-
         self.listWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_add.setText(_translate("MainWindow", "+"))
         self.pushButton_add.clicked.connect(AddFriendDialog.AddFriendDialog.widget_show)
