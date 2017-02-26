@@ -41,11 +41,11 @@ if __name__ == '__main__':
 
     AddFriendDialog.AddFriendDialog.init(main_ui)
 
-    LoginFrame.init()
+    #LoginFrame.init()
 
     JoinFrame.init()
 
-    WebChatFrame.init(MainWindow)
+    #WebChatFrame.init(MainWindow)
 
     FailDialog.init(MainWindow)
 

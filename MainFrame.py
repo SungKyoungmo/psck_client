@@ -12,11 +12,12 @@ import psutil
 import platform
 import ModifyProfile
 
-from PyQt5.QtWidgets import QSizePolicy
+from PyQt5.QtWidgets import QSizePolicy, qApp
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QThread
 import AddFriendDialog
 from DeviceinfoThread import DeviceInfoThread
+from LoginFrame import LoginFrame
 from model.Device import DeviceInfo
 from Myhttp import ThreadFriendInfoCommunication
 
@@ -67,7 +68,7 @@ class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(634, 600)
+        MainWindow.resize(634, 620)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         palette = QtGui.QPalette()
@@ -233,6 +234,12 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 634, 22))
         self.menubar.setObjectName("menubar")
+
+        self.menuConnect = QtWidgets.QMenu(self.menubar)
+        self.menuConnect.setObjectName("menuConnect")
+        self.menuExit = QtWidgets.QMenu(self.menubar)
+        self.menuConnect.setObjectName("menuExit")
+
         self.menuSetting = QtWidgets.QMenu(self.menubar)
         self.menuSetting.setObjectName("menuSetting")
         self.menuHelp = QtWidgets.QMenu(self.menubar)
@@ -241,13 +248,24 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        self.actionconnect = QtWidgets.QAction(MainWindow)
+        self.actionconnect.setObjectName("actionconnect")
+        self.actionexit = QtWidgets.QAction(MainWindow)
+        self.actionexit.setObjectName("actionexit")
+
         self.actionsetting = QtWidgets.QAction(MainWindow)
         self.actionsetting.setObjectName("actionsetting")
         self.actionhelp = QtWidgets.QAction(MainWindow)
         self.actionhelp.setObjectName("actionhelp")
+
+        self.menuConnect.addAction(self.actionconnect)
+        self.menuExit.addAction(self.actionexit)
         self.menuSetting.addAction(self.actionsetting)
         self.menuHelp.addAction(self.actionhelp)
 
+        self.menubar.addAction(self.menuConnect.menuAction())
+        self.menubar.addAction(self.menuExit.menuAction())
         self.menubar.addAction(self.menuSetting.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
@@ -314,10 +332,20 @@ class Ui_MainWindow(object):
         self.label_ram.setText(_translate("MainWindow", "RAM"))
         self.label_usage.setText(_translate("MainWindow", "Usage Time"))
         self.label_booting.setText(_translate("MainWindow", "Booting Time"))
+        self.menuConnect.setTitle(_translate("MainWindow","Connect"))
         self.menuSetting.setTitle(_translate("MainWindow", "Setting"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
+
+        self.actionconnect.setText(_translate("MainWindow","connect"))
+        self.actionexit = self.menuConnect.addAction('exit')
         self.actionsetting.setText(_translate("MainWindow", "setting"))
         self.actionhelp.setText(_translate("MainWindow", "help"))
+
+        self.actionconnect.triggered.connect(LoginFrame.init)
+
+        self.actionexit.triggered.connect(qApp.quit)
+
+
 
     def listwidget_item(self):
 
