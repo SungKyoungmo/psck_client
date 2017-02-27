@@ -125,6 +125,7 @@ class LoginFrame(object):
         if result['success']:
             LoginFrame.qwidget.hide()
             User.u_id = my_id
+            setattr(DeviceInfoThread.friend_device_info[0], 'u_id', my_id)
             result = FriendCommunication.friend_list(my_id)
 
             for i in result['friends']:

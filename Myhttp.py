@@ -110,6 +110,7 @@ class FriendCommunication(object):
 
         return json.loads(data.decode("utf-8"))
 
+
 class ThreadCommunication(QThread):
 
     def __init__(self):
