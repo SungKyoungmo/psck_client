@@ -3,7 +3,6 @@ import urllib.parse
 import time
 import requests
 from PyQt5.QtCore import QThread
-
 from DeviceinfoThread import DeviceInfoThread
 from model.Device import DeviceInfo
 from model.User import User
@@ -14,7 +13,7 @@ import json
 class Communication(object):
 
     url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
-    url = "http://127.0.0.1:3000"
+    #url = "http://127.0.0.1:3000"
 
     info = DeviceInfo('1', '1')
 
@@ -48,10 +47,11 @@ class Communication(object):
         try:
             data = urllib.request.urlopen(Communication.url + routes).read()
             print(data)
+            return json.loads(data.decode("utf-8"))
         except Exception as e:
             print(e)
+            return {'success': False, 'message': 'error'}
 
-        return json.loads(data.decode("utf-8"))
 
     @staticmethod
     def join(account):
@@ -81,7 +81,7 @@ class Communication(object):
 class FriendCommunication(object):
 
     url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port) + "/" + "friend"
-    url = "http://127.0.0.1:3000"
+    #url = "http://127.0.0.1:3000"
 
 
     @staticmethod
@@ -102,13 +102,18 @@ class FriendCommunication(object):
     @staticmethod
     def friend_list(my_id):
 
-        routes = '/friend?my_id='+my_id
+        try:
+            routes = '/friend?my_id='+my_id
 
-        data = urllib.request.urlopen(FriendCommunication.url + routes).read()
+            data = urllib.request.urlopen(FriendCommunication.url + routes).read()
 
-        print(json.loads(data.decode("utf-8")))
+            print(json.loads(data.decode("utf-8")))
 
-        return json.loads(data.decode("utf-8"))
+            return json.loads(data.decode("utf-8"))
+
+        except Exception as e:
+            print(e)
+
 
 class ThreadCommunication(QThread):
 

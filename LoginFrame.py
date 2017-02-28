@@ -121,7 +121,6 @@ class LoginFrame(object):
 
         result = Communication.login(my_id, my_pw)
 
-        print(result)
         if result['success']:
             LoginFrame.qwidget.hide()
             User.u_id = my_id
@@ -139,8 +138,8 @@ class LoginFrame(object):
     @staticmethod
     def btnKaKaoClicked():
 
-        #webbrowser.open('http://'+MyYaml.node_js_host+':'+str(MyYaml.node_js_port))
-        webbrowser.open('https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fredirect_uri%3Dkakaojs%26response_type%3Dcode%26state%3Dufa89hrnbheqsau6u92cpu8fr%26client_id%3D3dee48e4ccc6b7755390974f30a54832')
+        webbrowser.open('http://'+MyYaml.node_js_host+':'+str(MyYaml.node_js_port)+'/login/kakao')
+        #webbrowser.open('https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fredirect_uri%3Dkakaojs%26response_type%3Dcode%26state%3Dufa89hrnbheqsau6u92cpu8fr%26client_id%3D3dee48e4ccc6b7755390974f30a54832')
 
     @staticmethod
     def showdialog():

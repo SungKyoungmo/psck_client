@@ -8,16 +8,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
-
 class FailDialog(object):
 
     Dialog = None
     main_window = None
 
     @staticmethod
-    def init(main_window):
-        FailDialog.main_window = main_window
+    def init():
         FailDialog.Dialog = QtWidgets.QDialog()
         FailDialog.buttonBox = QtWidgets.QDialogButtonBox(FailDialog.Dialog)
 

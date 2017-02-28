@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file 'MainFrame.ui'
 #
 # Created by: PyQt5 UI code generator 5.7.1
 #
@@ -18,7 +18,6 @@ from PyQt5.QtCore import QThread
 import AddFriendDialog
 from DeviceinfoThread import DeviceInfoThread
 from LoginFrame import LoginFrame
-from model.Device import DeviceInfo
 from Myhttp import ThreadFriendInfoCommunication
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -28,6 +27,7 @@ booting_t = datetime.datetime.fromtimestamp(psutil.boot_time())
 
 mac_address = []
 ip_address = []
+
 
 def get_mac_address(): # Mac Address function
     if platform.system() == "Darwin":
@@ -40,6 +40,9 @@ def get_mac_address(): # Mac Address function
     elif platform.system() == "Windows":
         #print()
         addrs = psutil.net_if_addrs().get('Wi-Fi')
+        if addrs == None:
+            addrs = psutil.net_if_addrs().get('로컬 영역 연결')
+
         for i in addrs:
             if i.family == -1:  # Mac 주소
                 mac_address.append(i.address)
@@ -54,247 +57,299 @@ def get_ip_address(): # IP Address function
                 ip_address.append(i.address)
         return ip_address
 
-class Ui_MainWindow(object):
+
+class MainFrame(object):
 
     friends = []
     cpu_data = []
     ram_data = []
 
-    def __init__(self, mainwindow):
-        super().__init__()
-        self.setupUi(mainwindow)
-        self.t_status = thread_status(self)
-        self.t_status.start()
+    centralwidget = None
+    verticalLayoutWidget = None
+    verticalLayout = None
+    listWidget = None
+    horizontalLayout_3 = None
+    pushButton_add = None
+    pushButton_del = None
+    verticalLayoutWidget_2 = None
+    verticalLayout_2 = None
+    label_name = None
+    label_name_v = None
+    horizontalLayout = None
+    verticalLayout_3 = None
+    label_mac = None
+    label_mac_v = None
+    horizontalLayout_2 = None
+    verticalLayout_6 = None
+    label_booting = None
+    label_booting_v = None
+    verticalLayout_7 = None
+    label_usage = None
+    label_usage_v = None
+    label_cpu = None
+    label_cpu_v = None
+    graphView_cpu = None
+    label_ram = None
+    label_ram_v = None
+    graphView_ram = None
+    menubar = None
+    menuConnect = None
+    menuExit = None
+    menuSetting = None
+    menuHelp = None
+    statusbar = None
+    actionconnect = None
+    actionexit = None
+    actionsetting = None
+    actionhelp = None
+    menuConnect = None
+    menuExit = None
+    menuSetting = None
+    menuHelp = None
+    retranslateUi = None
+    mainwindow = None
 
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(634, 620)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
+    @staticmethod
+    def init():
+
+        MainFrame.mainwindow = QtWidgets.QMainWindow()
+        MainFrame.mainwindow.show()
+
+        MainFrame.setup_ui()
+        MainFrame.t_status = thread_status(MainFrame)
+        MainFrame.t_status.start()
+
+    @staticmethod
+    def setup_ui():
+        MainFrame.mainwindow.setObjectName("MainFrame")
+        MainFrame.mainwindow.resize(634, 620)
+        MainFrame.centralwidget = QtWidgets.QWidget(MainFrame.mainwindow)
+        MainFrame.centralwidget.setObjectName("centralwidget")
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Background, QtCore.Qt.white)
-        MainWindow.setPalette(palette)
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 240, 570))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(5, 5, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.listWidget = QtWidgets.QListWidget(self.verticalLayoutWidget)
-        self.listWidget.setMinimumSize(QtCore.QSize(0, 300))
+        MainFrame.mainwindow.setPalette(palette)
+        MainFrame.verticalLayoutWidget = QtWidgets.QWidget(MainFrame.centralwidget)
+        MainFrame.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 240, 570))
+        MainFrame.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        MainFrame.verticalLayout = QtWidgets.QVBoxLayout(MainFrame.verticalLayoutWidget)
+        MainFrame.verticalLayout.setContentsMargins(5, 5, 0, 0)
+        MainFrame.verticalLayout.setObjectName("verticalLayout")
+        MainFrame.listWidget = QtWidgets.QListWidget(MainFrame.verticalLayoutWidget)
+        MainFrame.listWidget.setMinimumSize(QtCore.QSize(0, 300))
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.listWidget.setFont(font)
-        self.listWidget.setIconSize(QtCore.QSize(50, 50))
-        self.listWidget.setResizeMode(QtWidgets.QListView.Fixed)
-        self.listWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
-        self.listWidget.setViewMode(QtWidgets.QListView.ListMode)
-        self.listWidget.setModelColumn(0)
-        self.listWidget.setObjectName("listWidget")
+        MainFrame.listWidget.setFont(font)
+        MainFrame.listWidget.setIconSize(QtCore.QSize(50, 50))
+        MainFrame.listWidget.setResizeMode(QtWidgets.QListView.Fixed)
+        MainFrame.listWidget.setLayoutMode(QtWidgets.QListView.SinglePass)
+        MainFrame.listWidget.setViewMode(QtWidgets.QListView.ListMode)
+        MainFrame.listWidget.setModelColumn(0)
+        MainFrame.listWidget.setObjectName("listWidget")
 
-        self.verticalLayout.addWidget(self.listWidget)
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.pushButton_add = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton_add.setMinimumSize(QtCore.QSize(0, 50))
-        self.pushButton_add.setObjectName("pushButton_add")
-        self.horizontalLayout_3.addWidget(self.pushButton_add)
-        self.pushButton_del = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton_del.setMinimumSize(QtCore.QSize(0, 50))
-        self.pushButton_del.setObjectName("pushButton_del")
-        self.horizontalLayout_3.addWidget(self.pushButton_del)
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
-        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(230, 0, 411, 561))
-        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_2.setContentsMargins(30, 0, 0, 0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        MainFrame.verticalLayout.addWidget(MainFrame.listWidget)
+        MainFrame.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        MainFrame.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        MainFrame.pushButton_add = QtWidgets.QPushButton(MainFrame.verticalLayoutWidget)
+        MainFrame.pushButton_add.setMinimumSize(QtCore.QSize(0, 50))
+        MainFrame.pushButton_add.setObjectName("pushButton_add")
+        MainFrame.horizontalLayout_3.addWidget(MainFrame.pushButton_add)
+        MainFrame.pushButton_del = QtWidgets.QPushButton(MainFrame.verticalLayoutWidget)
+        MainFrame.pushButton_del.setMinimumSize(QtCore.QSize(0, 50))
+        MainFrame.pushButton_del.setObjectName("pushButton_del")
+        MainFrame.horizontalLayout_3.addWidget(MainFrame.pushButton_del)
+        MainFrame.verticalLayout.addLayout(MainFrame.horizontalLayout_3)
+        MainFrame.verticalLayoutWidget_2 = QtWidgets.QWidget(MainFrame.centralwidget)
+        MainFrame.verticalLayoutWidget_2.setGeometry(QtCore.QRect(230, 0, 411, 561))
+        MainFrame.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+        MainFrame.verticalLayout_2 = QtWidgets.QVBoxLayout(MainFrame.verticalLayoutWidget_2)
+        MainFrame.verticalLayout_2.setContentsMargins(30, 0, 0, 0)
+        MainFrame.verticalLayout_2.setObjectName("verticalLayout_2")
 
-        self.label_name = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_name.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
-        self.label_name.setObjectName("label_name")
-        self.verticalLayout_2.addWidget(self.label_name)
+        MainFrame.label_name = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_name.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_name.setObjectName("label_name")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_name)
 
-        self.label_name_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_name_v.setEnabled(True)
-        self.label_name_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_name_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.label_name_v.setObjectName("label_name_v")
-        self.verticalLayout_2.addWidget(self.label_name_v)
+        MainFrame.label_name_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_name_v.setEnabled(True)
+        MainFrame.label_name_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_name_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_name_v.setObjectName("label_name_v")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_name_v)
 
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        MainFrame.horizontalLayout = QtWidgets.QHBoxLayout()
+        MainFrame.horizontalLayout.setObjectName("horizontalLayout")
+        MainFrame.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        MainFrame.verticalLayout_5.setObjectName("verticalLayout_5")
 
-        self.label_ip = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_ip.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
-        self.label_ip.setObjectName("label_ip")
-        self.verticalLayout_5.addWidget(self.label_ip)
-        self.label_ip_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_ip_v.setEnabled(True)
-        self.label_ip_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_ip_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
-        self.label_ip_v.setObjectName("label_ip_v")
-        self.verticalLayout_5.addWidget(self.label_ip_v)
+        MainFrame.label_ip = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_ip.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
+        MainFrame.label_ip.setObjectName("label_ip")
+        MainFrame.verticalLayout_5.addWidget(MainFrame.label_ip)
+        MainFrame.label_ip_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_ip_v.setEnabled(True)
+        MainFrame.label_ip_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_ip_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        MainFrame.label_ip_v.setObjectName("label_ip_v")
+        MainFrame.verticalLayout_5.addWidget(MainFrame.label_ip_v)
 
-        self.horizontalLayout.addLayout(self.verticalLayout_5)
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        MainFrame.horizontalLayout.addLayout(MainFrame.verticalLayout_5)
+        MainFrame.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        MainFrame.verticalLayout_3.setObjectName("verticalLayout_3")
 
-        self.label_mac = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_mac.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
-        self.label_mac.setObjectName("label_mac")
-        self.verticalLayout_3.addWidget(self.label_mac)
-        self.label_mac_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_mac_v.setEnabled(True)
-        self.label_mac_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_mac_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
-        self.label_mac_v.setObjectName("label_mac_v")
-        self.verticalLayout_3.addWidget(self.label_mac_v)
+        MainFrame.label_mac = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_mac.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
+        MainFrame.label_mac.setObjectName("label_mac")
+        MainFrame.verticalLayout_3.addWidget(MainFrame.label_mac)
+        MainFrame.label_mac_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_mac_v.setEnabled(True)
+        MainFrame.label_mac_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_mac_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        MainFrame.label_mac_v.setObjectName("label_mac_v")
+        MainFrame.verticalLayout_3.addWidget(MainFrame.label_mac_v)
 
-        self.horizontalLayout.addLayout(self.verticalLayout_3)
-        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        MainFrame.horizontalLayout.addLayout(MainFrame.verticalLayout_3)
+        MainFrame.verticalLayout_2.addLayout(MainFrame.horizontalLayout)
 
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0,10,0,0)
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        MainFrame.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        MainFrame.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        MainFrame.horizontalLayout_2.setContentsMargins(0,10,0,0)
+        MainFrame.verticalLayout_6 = QtWidgets.QVBoxLayout()
+        MainFrame.verticalLayout_6.setObjectName("verticalLayout_6")
 
-        self.label_booting = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_booting.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
-        self.label_booting.setObjectName("label_usage")
-        self.verticalLayout_6.addWidget(self.label_booting)
+        MainFrame.label_booting = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_booting.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
+        MainFrame.label_booting.setObjectName("label_usage")
+        MainFrame.verticalLayout_6.addWidget(MainFrame.label_booting)
 
-        self.label_booting_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_booting_v.setEnabled(True)
-        self.label_booting_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_booting_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
-        self.label_booting_v.setObjectName("label_booting_v")
-        self.verticalLayout_6.addWidget(self.label_booting_v)
+        MainFrame.label_booting_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_booting_v.setEnabled(True)
+        MainFrame.label_booting_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_booting_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        MainFrame.label_booting_v.setObjectName("label_booting_v")
+        MainFrame.verticalLayout_6.addWidget(MainFrame.label_booting_v)
 
-        self.horizontalLayout_2.addLayout(self.verticalLayout_6)
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
-
-
-        self.label_usage = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_usage.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
-        self.label_usage.setObjectName("label_access")
-        self.verticalLayout_7.addWidget(self.label_usage)
-
-        self.label_usage_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_usage_v.setEnabled(True)
-        self.label_usage_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_usage_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
-        self.label_usage_v.setObjectName("label_access_v")
-        self.verticalLayout_7.addWidget(self.label_usage_v)
-
-        self.horizontalLayout_2.addLayout(self.verticalLayout_7)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        MainFrame.horizontalLayout_2.addLayout(MainFrame.verticalLayout_6)
+        MainFrame.verticalLayout_7 = QtWidgets.QVBoxLayout()
+        MainFrame.verticalLayout_7.setObjectName("verticalLayout_7")
 
 
-        self.label_cpu = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_cpu.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
-        self.label_cpu.setObjectName("label_cpu")
-        self.verticalLayout_2.addWidget(self.label_cpu)
+        MainFrame.label_usage = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_usage.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
+        MainFrame.label_usage.setObjectName("label_access")
+        MainFrame.verticalLayout_7.addWidget(MainFrame.label_usage)
 
-        self.label_cpu_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_cpu_v.setEnabled(True)
-        self.label_cpu_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_cpu_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.label_cpu_v.setObjectName("label_cpu_v")
-        self.verticalLayout_2.addWidget(self.label_cpu_v)
+        MainFrame.label_usage_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_usage_v.setEnabled(True)
+        MainFrame.label_usage_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_usage_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        MainFrame.label_usage_v.setObjectName("label_access_v")
+        MainFrame.verticalLayout_7.addWidget(MainFrame.label_usage_v)
 
-        self.graphView_cpu = PlotCanvas(self, width=6, height=2)
-        self.verticalLayout_2.addWidget(self.graphView_cpu)
-
-        self.label_ram = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_ram.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
-        self.label_ram.setObjectName("label_ram")
-        self.verticalLayout_2.addWidget(self.label_ram)
-
-        self.label_ram_v = QtWidgets.QLabel(self.verticalLayoutWidget_2)
-        self.label_ram_v.setEnabled(True)
-        self.label_ram_v.setMinimumSize(QtCore.QSize(0, 0))
-        self.label_ram_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.label_ram_v.setObjectName("label_ram_v")
-        self.verticalLayout_2.addWidget(self.label_ram_v)
-
-        self.graphView_ram = PlotCanvas(self, width=6, height=2)
-        self.verticalLayout_2.addWidget(self.graphView_ram)
+        MainFrame.horizontalLayout_2.addLayout(MainFrame.verticalLayout_7)
+        MainFrame.verticalLayout_2.addLayout(MainFrame.horizontalLayout_2)
 
 
-        self.verticalLayoutWidget.raise_()
-        self.verticalLayoutWidget_2.raise_()
-        self.listWidget.raise_()
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 634, 22))
-        self.menubar.setObjectName("menubar")
+        MainFrame.label_cpu = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_cpu.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_cpu.setObjectName("label_cpu")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_cpu)
 
-        self.menuConnect = QtWidgets.QMenu(self.menubar)
-        self.menuConnect.setObjectName("menuConnect")
-        self.menuExit = QtWidgets.QMenu(self.menubar)
-        self.menuConnect.setObjectName("menuExit")
+        MainFrame.label_cpu_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_cpu_v.setEnabled(True)
+        MainFrame.label_cpu_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_cpu_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_cpu_v.setObjectName("label_cpu_v")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_cpu_v)
 
-        self.menuSetting = QtWidgets.QMenu(self.menubar)
-        self.menuSetting.setObjectName("menuSetting")
-        self.menuHelp = QtWidgets.QMenu(self.menubar)
-        self.menuHelp.setObjectName("menuHelp")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        MainFrame.graphView_cpu = PlotCanvas(MainFrame, width=6, height=2)
+        MainFrame.verticalLayout_2.addWidget(MainFrame.graphView_cpu)
 
-        self.actionconnect = QtWidgets.QAction(MainWindow)
-        self.actionconnect.setObjectName("actionconnect")
-        self.actionexit = QtWidgets.QAction(MainWindow)
-        self.actionexit.setObjectName("actionexit")
+        MainFrame.label_ram = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_ram.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_ram.setObjectName("label_ram")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_ram)
 
-        self.actionsetting = QtWidgets.QAction(MainWindow)
-        self.actionsetting.setObjectName("actionsetting")
-        self.actionhelp = QtWidgets.QAction(MainWindow)
-        self.actionhelp.setObjectName("actionhelp")
+        MainFrame.label_ram_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
+        MainFrame.label_ram_v.setEnabled(True)
+        MainFrame.label_ram_v.setMinimumSize(QtCore.QSize(0, 0))
+        MainFrame.label_ram_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_ram_v.setObjectName("label_ram_v")
+        MainFrame.verticalLayout_2.addWidget(MainFrame.label_ram_v)
 
-        self.menuConnect.addAction(self.actionconnect)
-        self.menuExit.addAction(self.actionexit)
-        self.menuSetting.addAction(self.actionsetting)
-        self.menuHelp.addAction(self.actionhelp)
+        MainFrame.graphView_ram = PlotCanvas(MainFrame, width=6, height=2)
+        MainFrame.verticalLayout_2.addWidget(MainFrame.graphView_ram)
 
-        self.menubar.addAction(self.menuConnect.menuAction())
-        self.menubar.addAction(self.menuExit.menuAction())
-        self.menubar.addAction(self.menuSetting.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainFrame.verticalLayoutWidget.raise_()
+        MainFrame.verticalLayoutWidget_2.raise_()
+        MainFrame.listWidget.raise_()
+        MainFrame.mainwindow.setCentralWidget(MainFrame.centralwidget)
+        MainFrame.menubar = QtWidgets.QMenuBar(MainFrame.mainwindow)
+        MainFrame.menubar.setGeometry(QtCore.QRect(0, 0, 634, 22))
+        MainFrame.menubar.setObjectName("menubar")
 
-        self.listWidget.itemClicked.connect(self.friend_list_click_event)
-        self.listWidget.itemDoubleClicked.connect(self.friend_list_double_click_event)
+        MainFrame.menuConnect = QtWidgets.QMenu(MainFrame.menubar)
+        MainFrame.menuConnect.setObjectName("menuConnect")
+        MainFrame.menuExit = QtWidgets.QMenu(MainFrame.menubar)
+        MainFrame.menuExit.setObjectName("menuExit")
 
-    def set_text(self, device_info):
+        MainFrame.menuSetting = QtWidgets.QMenu(MainFrame.menubar)
+        MainFrame.menuSetting.setObjectName("menuSetting")
+        MainFrame.menuHelp = QtWidgets.QMenu(MainFrame.menubar)
+        MainFrame.menuHelp.setObjectName("menuHelp")
+        MainFrame.mainwindow.setMenuBar(MainFrame.menubar)
+        MainFrame.statusbar = QtWidgets.QStatusBar(MainFrame.mainwindow)
+        MainFrame.statusbar.setObjectName("statusbar")
+        MainFrame.mainwindow.setStatusBar(MainFrame.statusbar)
+
+        MainFrame.actionconnect = QtWidgets.QAction(MainFrame.mainwindow)
+        MainFrame.actionconnect.setObjectName("actionconnect")
+        MainFrame.actionexit = QtWidgets.QAction(MainFrame.mainwindow)
+        MainFrame.actionexit.setObjectName("actionexit")
+
+        MainFrame.actionsetting = QtWidgets.QAction(MainFrame.mainwindow)
+        MainFrame.actionsetting.setObjectName("actionsetting")
+        MainFrame.actionhelp = QtWidgets.QAction(MainFrame.mainwindow)
+        MainFrame.actionhelp.setObjectName("actionhelp")
+
+        MainFrame.menuConnect.addAction(MainFrame.actionconnect)
+        MainFrame.menuExit.addAction(MainFrame.actionexit)
+        MainFrame.menuSetting.addAction(MainFrame.actionsetting)
+        MainFrame.menuHelp.addAction(MainFrame.actionhelp)
+
+        MainFrame.menubar.addAction(MainFrame.menuConnect.menuAction())
+        MainFrame.menubar.addAction(MainFrame.menuExit.menuAction())
+        MainFrame.menubar.addAction(MainFrame.menuSetting.menuAction())
+        MainFrame.menubar.addAction(MainFrame.menuHelp.menuAction())
+
+        MainFrame.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(MainFrame.mainwindow)
+
+        MainFrame.listWidget.itemClicked.connect(MainFrame.friend_list_click_event)
+        MainFrame.listWidget.itemDoubleClicked.connect(MainFrame.friend_list_double_click_event)
+
+    @staticmethod
+    def set_text(device_info):
         _translate = QtCore.QCoreApplication.translate
 
         try:
-            self.label_ip_v.setText(_translate("MainWindow", device_info.d_ip))
-            self.label_mac_v.setText(_translate("MainWindow", device_info.d_mac))
-            self.label_name_v.setText(_translate("MainWindow", device_info.d_name))
-            self.label_booting_v.setText(_translate("MainWindow", str(device_info.d_boot_t)))
-            self.label_cpu_v.setText(_translate("MainWindow", "percent : " + str(device_info.d_cpu_per) + "%"))
-            self.label_ram_v.setText(_translate("MainWindow", "percent : " + str(device_info.d_mem_per) + "%  total : " + str(round(device_info.d_mem_total / 1024 / 1024)) + "MB  available : " + str(round(device_info.d_mem_avail / 1024 / 1024)) + "MB"))
+            MainFrame.label_ip_v.setText(_translate("MainFrame", device_info.d_ip))
+            MainFrame.label_mac_v.setText(_translate("MainFrame", device_info.d_mac))
+            MainFrame.label_name_v.setText(_translate("MainFrame", device_info.d_name))
+            MainFrame.label_booting_v.setText(_translate("MainFrame", str(device_info.d_boot_t)))
+            MainFrame.label_cpu_v.setText(_translate("MainFrame", "percent : " + str(device_info.d_cpu_per) + "%"))
+            MainFrame.label_ram_v.setText(_translate("MainFrame", "percent : " + str(device_info.d_mem_per) + "%  total : " + str(round(device_info.d_mem_total / 1024 / 1024)) + "MB  available : " + str(round(device_info.d_mem_avail / 1024 / 1024)) + "MB"))
 
-            if(len(self.cpu_data) > 10):
-                self.cpu_data.pop(0)
-            self.cpu_data.append(device_info.d_cpu_per)
-            self.graphView_cpu.plot(self.cpu_data)
+            if(len(MainFrame.cpu_data) > 10):
+                MainFrame.cpu_data.pop(0)
+            MainFrame.cpu_data.append(device_info.d_cpu_per)
+            MainFrame.graphView_cpu.plot(MainFrame.cpu_data)
 
-            if (len(self.ram_data) > 10):
-                self.ram_data.pop(0)
-            self.ram_data.append(device_info.d_mem_per)
-            self.graphView_ram.plot(self.ram_data)
+            if (len(MainFrame.ram_data) > 10):
+                MainFrame.ram_data.pop(0)
+            MainFrame.ram_data.append(device_info.d_mem_per)
+            MainFrame.graphView_ram.plot(MainFrame.ram_data)
 
             usage_time = datetime.datetime.now() - device_info.d_boot_t
             usage_ts = usage_time.total_seconds()
@@ -302,44 +357,47 @@ class Ui_MainWindow(object):
             usage_m = int((usage_ts - (usage_h * 3600)) / 60)
             usage_s = int(usage_ts - (usage_h * 3600) - (usage_m * 60))
 
-            self.label_usage_v.setText(_translate("MainWindow", str(usage_h) + "시간 " + str(usage_m) + "분 " + str(usage_s) + "초"))
+            MainFrame.label_usage_v.setText(_translate("MainFrame", str(usage_h) + "시간 " + str(usage_m) + "분 " + str(usage_s) + "초"))
         except Exception as e:
             print(e)
 
-
-    def retranslateUi(self, MainWindow):
+    @staticmethod
+    def retranslateUi():
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "HackerViewer"))
-        __sortingEnabled = self.listWidget.isSortingEnabled()
-        self.listWidget.setSortingEnabled(False)
-        self.listWidget.setSortingEnabled(__sortingEnabled)
-        self.pushButton_add.setText(_translate("MainWindow", "+"))
-        self.pushButton_add.clicked.connect(AddFriendDialog.AddFriendDialog.widget_show)
-        self.pushButton_del.setText(_translate("MainWindow", "-"))
-        self.pushButton_del.clicked.connect(self.del_friend)
-        self.label_ip.setText(_translate("MainWindow", "IP"))
-        self.label_mac.setText(_translate("MainWindow", "MAC"))
-        self.label_name.setText(_translate("MainWindow", "NAME"))
-        self.label_cpu.setText(_translate("MainWindow", "CPU"))
-        self.label_ram.setText(_translate("MainWindow", "RAM"))
-        self.label_usage.setText(_translate("MainWindow", "Usage Time"))
-        self.label_booting.setText(_translate("MainWindow", "Booting Time"))
-        self.menuConnect.setTitle(_translate("MainWindow","Connect"))
-        self.menuSetting.setTitle(_translate("MainWindow", "Setting"))
-        self.menuHelp.setTitle(_translate("MainWindow", "Help"))
+        MainFrame.mainwindow.setWindowTitle(_translate("MainFrame", "HackerViewer"))
 
-        self.actionconnect.setText(_translate("MainWindow","connect"))
-        self.actionexit = self.menuConnect.addAction('exit')
-        self.actionsetting.setText(_translate("MainWindow", "setting"))
-        self.actionhelp.setText(_translate("MainWindow", "help"))
+        __sortingEnabled = MainFrame.listWidget.isSortingEnabled()
+        MainFrame.listWidget.setSortingEnabled(False)
+        MainFrame.listwidget_item()
+        MainFrame.listWidget.setSortingEnabled(__sortingEnabled)
+        MainFrame.pushButton_add.setText(_translate("MainFrame", "+"))
+        MainFrame.pushButton_add.clicked.connect(AddFriendDialog.AddFriendDialog.widget_show)
+        MainFrame.pushButton_del.setText(_translate("MainFrame", "-"))
+        MainFrame.pushButton_del.clicked.connect(MainFrame.del_friend)
+        MainFrame.label_ip.setText(_translate("MainFrame", "IP"))
+        MainFrame.label_mac.setText(_translate("MainFrame", "MAC"))
+        MainFrame.label_name.setText(_translate("MainFrame", "NAME"))
+        MainFrame.label_cpu.setText(_translate("MainFrame", "CPU"))
+        MainFrame.label_ram.setText(_translate("MainFrame", "RAM"))
+        MainFrame.label_usage.setText(_translate("MainFrame", "Usage Time"))
+        MainFrame.label_booting.setText(_translate("MainFrame", "Booting Time"))
+        MainFrame.menuConnect.setTitle(_translate("MainFrame","Connect"))
+        MainFrame.menuSetting.setTitle(_translate("MainFrame", "Setting"))
+        MainFrame.menuHelp.setTitle(_translate("MainFrame", "Help"))
 
-        self.actionconnect.triggered.connect(LoginFrame.init)
+        MainFrame.actionconnect.setText(_translate("MainFrame","login"))
+        MainFrame.actionexit = MainFrame.menuConnect.addAction('exit')
+        MainFrame.actionsetting.setText(_translate("MainFrame", "setting"))
+        MainFrame.actionhelp.setText(_translate("MainFrame", "help"))
 
-        self.actionexit.triggered.connect(qApp.quit)
+        MainFrame.actionconnect.triggered.connect(LoginFrame.init)
+
+        MainFrame.actionexit.triggered.connect(qApp.quit)
 
 
 
-    def listwidget_item(self):
+    @staticmethod
+    def listwidget_item():
 
         _translate = QtCore.QCoreApplication.translate
 
@@ -348,79 +406,79 @@ class Ui_MainWindow(object):
 
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.NoBrush)
-        self.listWidget.clear()
+        MainFrame.listWidget.clear()
 
         for index, i in enumerate(DeviceInfoThread.friend_device_info):
             listitem = QtWidgets.QListWidgetItem()
             listitem.setIcon(icon)
             listitem.setBackground(brush)
 
-            self.listWidget.addItem(listitem)
-            item = self.listWidget.item(index)
+            MainFrame.listWidget.addItem(listitem)
+            item = MainFrame.listWidget.item(index)
             if index is 0:
-                item.setText(_translate("MainWindow", "( me )"))
+                item.setText(_translate("MainFrame", "( me )"))
             else:
-                item.setText(_translate("MainWindow", i.name))
+                item.setText(_translate("MainFrame", i.name))
 
 
-    def friend_list_click_event(self):
-        for x in self.listWidget.selectedIndexes():
+    @staticmethod
+    def friend_list_click_event():
+        for x in MainFrame.listWidget.selectedIndexes():
             ThreadFriendInfoCommunication.u_id = DeviceInfoThread.friend_device_info[x.row()].u_id
             thread_status.selected = x.row()
 
-    def friend_list_double_click_event(self):
-        for x in self.listWidget.selectedIndexes():
+    @staticmethod
+    def friend_list_double_click_event(MainFrame):
+        for x in MainFrame.listWidget.selectedIndexes():
             ModifyProfile.ModifyProfile.init()
             if x.row()!=0:
                 ModifyProfile.ModifyProfile.hide_button()
             ModifyProfile.ModifyProfile.set_info(DeviceInfoThread.friend_device_info[x.row()].name,DeviceInfoThread.friend_device_info[x.row()].u_id)
             print(DeviceInfoThread.friend_device_info[x.row()].u_id)
 
-
-    def del_friend(self):
-        listitems = self.listWidget.selectedItems()
+    @staticmethod
+    def del_friend(MainFrame):
+        listitems = MainFrame.listWidget.selectedItems()
         if not listitems: return
         for item in listitems:
-            del DeviceInfoThread.friend_device_info[self.listWidget.row(item)]
-            self.listWidget.takeItem(self.listWidget.row(item))
+            del DeviceInfoThread.friend_device_info[MainFrame.listWidget.row(item)]
+            MainFrame.listWidget.takeItem(MainFrame.listWidget.row(item))
 
 
 class thread_status(QThread):
 
     selected = 0
 
-    def __init__(self, main_frame):
-        QThread.__init__(self)
-        self.main_frame = main_frame
+    def __init__(MainFrame, main_frame):
+        QThread.__init__(MainFrame)
+        MainFrame.main_frame = main_frame
 
-    def __del__(self):
-        self.wait()
+    def __del__(MainFrame):
+        MainFrame.wait()
 
-    def run(self):
+    def run(MainFrame):
         while True:
-            self.main_frame.set_text(DeviceInfoThread.friend_device_info[thread_status.selected])
+            MainFrame.main_frame.set_text(DeviceInfoThread.friend_device_info[thread_status.selected])
             time.sleep(1)
 
 
 class PlotCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=6, height=2, dpi=60):
+    def __init__(MainFrame, parent=None, width=6, height=2, dpi=60):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(1,1,1)
+        MainFrame.axes = fig.add_subplot(1,1,1)
 
-        FigureCanvas.__init__(self, fig)
+        FigureCanvas.__init__(MainFrame, fig)
 
-        FigureCanvas.setSizePolicy(self, 100, 20)
-        FigureCanvas.updateGeometry(self)
+        FigureCanvas.setSizePolicy(MainFrame, 100, 20)
+        FigureCanvas.updateGeometry(MainFrame)
 
-
-
-    def plot(self,data):
-        ax = self.figure.add_subplot(1,1,1)
+    def plot(MainFrame,data):
+        ax = MainFrame.figure.add_subplot(1,1,1)
         ax.clear()
         ax.plot(data, 'r-',linewidth=1.5)
         ax.plot(0)
         ax.plot(100)
-        self.draw()
+        MainFrame.draw()
 
 
 

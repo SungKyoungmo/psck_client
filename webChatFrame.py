@@ -4,6 +4,7 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import QUrlQuery
 
+from MainFrame import MainFrame
 from LoginFrame import LoginFrame
 from Util import MyYaml
 
@@ -11,14 +12,14 @@ from Util import MyYaml
 class WebChatFrame(LoginFrame):
 
     url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
-    url_t = 'http://localhost:3000'
+    #url = 'http://localhost:3000'
 
     @staticmethod
-    def init(main_widget,my_id = '', oppenent_id = ''):
+    def init(my_id = 'mw9027', oppenent_id = ''):
         WebChatFrame.q_widget = QtWidgets.QWidget()
         WebChatFrame.q_widget.show()
         WebChatFrame.q_widget.setFixedSize(300, 600)
-        WebChatFrame.q_widget.move(main_widget.mapToGlobal(QPoint(main_widget.width()+1, -23)));
+        WebChatFrame.q_widget.move(MainFrame.mainwindow.mapToGlobal(QPoint(MainFrame.mainwindow.width()+1, -23)));
         horizontalLayout = QtWidgets.QHBoxLayout(WebChatFrame.q_widget)
         horizontalLayout.setContentsMargins(0, 0, 0, 0)
 
@@ -27,10 +28,10 @@ class WebChatFrame(LoginFrame):
         view.settings().setAttribute(QtWebEngineWidgets.QWebEngineSettings.PluginsEnabled, True)
         view.settings().setAttribute(QtWebEngineWidgets.QWebEngineSettings.JavascriptEnabled, True)
 
-        url = QUrl(WebChatFrame.url+'/chat')
+        url = QUrl(WebChatFrame.url+'/chat?m_id='+my_id)
 
         urldata = QUrlQuery()
-        urldata.addQueryItem('my_id', my_id)
+        urldata.addQueryItem('m_id', my_id)
         urldata.addQueryItem('oppenent_id', oppenent_id)
         url.setQuery(urldata)
 
