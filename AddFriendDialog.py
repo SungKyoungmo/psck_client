@@ -21,8 +21,7 @@ class AddFriendDialog(object):
     main_window = None
 
     @staticmethod
-    def init(main_window):
-        AddFriendDialog.main_window = main_window
+    def init():
         AddFriendDialog.Dialog = QtWidgets.QDialog()
         AddFriendDialog.buttonBox = QtWidgets.QDialogButtonBox(AddFriendDialog.Dialog)
         AddFriendDialog.lineEdit = QtWidgets.QLineEdit(AddFriendDialog.Dialog)
