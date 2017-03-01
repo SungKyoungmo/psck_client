@@ -80,7 +80,7 @@ class Communication(object):
 
 class FriendCommunication(object):
 
-    url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port) + "/" + "friend"
+    url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
     #url = "http://127.0.0.1:3000"
 
 
