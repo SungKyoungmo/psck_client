@@ -12,12 +12,12 @@ import psutil
 import platform
 import ModifyProfile
 
-from PyQt5.QtWidgets import QSizePolicy, qApp
+from PyQt5.QtWidgets import qApp
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QThread
 import AddFriendDialog
 from DeviceinfoThread import DeviceInfoThread
-from LoginFrame import LoginFrame
+import LoginFrame
 from Myhttp import ThreadFriendInfoCommunication
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -390,7 +390,7 @@ class MainFrame(object):
         MainFrame.actionsetting.setText(_translate("MainFrame", "setting"))
         MainFrame.actionhelp.setText(_translate("MainFrame", "help"))
 
-        MainFrame.actionconnect.triggered.connect(LoginFrame.init)
+        MainFrame.actionconnect.triggered.connect(LoginFrame.LoginFrame.init)
 
         MainFrame.actionexit.triggered.connect(qApp.quit)
 
@@ -428,7 +428,7 @@ class MainFrame(object):
             thread_status.selected = x.row()
 
     @staticmethod
-    def friend_list_double_click_event(MainFrame):
+    def friend_list_double_click_event():
         for x in MainFrame.listWidget.selectedIndexes():
             ModifyProfile.ModifyProfile.init()
             if x.row()!=0:
@@ -437,7 +437,7 @@ class MainFrame(object):
             print(DeviceInfoThread.friend_device_info[x.row()].u_id)
 
     @staticmethod
-    def del_friend(MainFrame):
+    def del_friend():
         listitems = MainFrame.listWidget.selectedItems()
         if not listitems: return
         for item in listitems:
