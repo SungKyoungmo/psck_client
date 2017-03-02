@@ -137,10 +137,17 @@ class ThreadFriendInfoCommunication(QThread):
         while True:
             if ThreadFriendInfoCommunication.u_id != User.u_id and ThreadFriendInfoCommunication.u_id != None:
                 friend = Communication.send2(ThreadFriendInfoCommunication.u_id)
-                for i in (DeviceInfoThread.friend_device_info):
-                    if i.u_id == friend['friend']['u_id']:
-                        print(" !!!!!!!")
-                            # = friend['friend']
+                for i in range(len(DeviceInfoThread.friend_device_info)):
+                    if DeviceInfoThread.friend_device_info[i].u_id == friend['device']['u_id']:
+                        DeviceInfoThread.friend_device_info[i].u_id = friend['device']['u_id']
+                        DeviceInfoThread.friend_device_info[i].d_name = friend['device']['d_name']
+                        DeviceInfoThread.friend_device_info[i].d_boot_t = friend['device']['d_boot_t']
+                        DeviceInfoThread.friend_device_info[i].d_mac = friend['device']['d_mac']
+                        DeviceInfoThread.friend_device_info[i].d_ip = friend['device']['d_ip']
+                        DeviceInfoThread.friend_device_info[i].d_mem_total = float(friend['device']['d_mem_total'])
+                        DeviceInfoThread.friend_device_info[i].d_mem_avail = float(friend['device']['d_mem_avail'])
+                        DeviceInfoThread.friend_device_info[i].d_mem_per = float(friend['device']['d_mem_per'])
+                        DeviceInfoThread.friend_device_info[i].d_cpu_per = float(friend['device']['d_cpu_per'])
 
             time.sleep(1)
 

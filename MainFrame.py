@@ -29,7 +29,7 @@ mac_address = []
 ip_address = []
 
 
-def get_mac_address(): # Mac Address function
+def get_mac_address():  # Mac Address function
     if platform.system() == "Darwin":
         addrs = psutil.net_if_addrs().get('en0')
         for i in addrs:
@@ -38,7 +38,7 @@ def get_mac_address(): # Mac Address function
         return mac_address
 
     elif platform.system() == "Windows":
-        #print()
+        # print()
         addrs = psutil.net_if_addrs().get('Wi-Fi')
         if addrs == None:
             addrs = psutil.net_if_addrs().get('로컬 영역 연결')
@@ -49,7 +49,7 @@ def get_mac_address(): # Mac Address function
         return mac_address
 
 
-def get_ip_address(): # IP Address function
+def get_ip_address():  # IP Address function
     if platform.system() == "Darwin":
         addrs = psutil.net_if_addrs().get('en0')
         for i in addrs:
@@ -59,7 +59,6 @@ def get_ip_address(): # IP Address function
 
 
 class MainFrame(object):
-
     friends = []
     cpu_data = [0 for i in range(10)]
     ram_data = [0 for i in range(10)]
@@ -166,14 +165,14 @@ class MainFrame(object):
         MainFrame.verticalLayout_2.setObjectName("verticalLayout_2")
 
         MainFrame.label_name = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
-        MainFrame.label_name.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_name.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
         MainFrame.label_name.setObjectName("label_name")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_name)
 
         MainFrame.label_name_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
         MainFrame.label_name_v.setEnabled(True)
         MainFrame.label_name_v.setMinimumSize(QtCore.QSize(0, 0))
-        MainFrame.label_name_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_name_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         MainFrame.label_name_v.setObjectName("label_name_v")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_name_v)
 
@@ -213,7 +212,7 @@ class MainFrame(object):
 
         MainFrame.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         MainFrame.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        MainFrame.horizontalLayout_2.setContentsMargins(0,10,0,0)
+        MainFrame.horizontalLayout_2.setContentsMargins(0, 10, 0, 0)
         MainFrame.verticalLayout_6 = QtWidgets.QVBoxLayout()
         MainFrame.verticalLayout_6.setObjectName("verticalLayout_6")
 
@@ -233,7 +232,6 @@ class MainFrame(object):
         MainFrame.verticalLayout_7 = QtWidgets.QVBoxLayout()
         MainFrame.verticalLayout_7.setObjectName("verticalLayout_7")
 
-
         MainFrame.label_usage = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
         MainFrame.label_usage.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
         MainFrame.label_usage.setObjectName("label_access")
@@ -249,16 +247,15 @@ class MainFrame(object):
         MainFrame.horizontalLayout_2.addLayout(MainFrame.verticalLayout_7)
         MainFrame.verticalLayout_2.addLayout(MainFrame.horizontalLayout_2)
 
-
         MainFrame.label_cpu = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
-        MainFrame.label_cpu.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_cpu.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
         MainFrame.label_cpu.setObjectName("label_cpu")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_cpu)
 
         MainFrame.label_cpu_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
         MainFrame.label_cpu_v.setEnabled(True)
         MainFrame.label_cpu_v.setMinimumSize(QtCore.QSize(0, 0))
-        MainFrame.label_cpu_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_cpu_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         MainFrame.label_cpu_v.setObjectName("label_cpu_v")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_cpu_v)
 
@@ -266,20 +263,19 @@ class MainFrame(object):
         MainFrame.verticalLayout_2.addWidget(MainFrame.graphView_cpu)
 
         MainFrame.label_ram = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
-        MainFrame.label_ram.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        MainFrame.label_ram.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
         MainFrame.label_ram.setObjectName("label_ram")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_ram)
 
         MainFrame.label_ram_v = QtWidgets.QLabel(MainFrame.verticalLayoutWidget_2)
         MainFrame.label_ram_v.setEnabled(True)
         MainFrame.label_ram_v.setMinimumSize(QtCore.QSize(0, 0))
-        MainFrame.label_ram_v.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        MainFrame.label_ram_v.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         MainFrame.label_ram_v.setObjectName("label_ram_v")
         MainFrame.verticalLayout_2.addWidget(MainFrame.label_ram_v)
 
         MainFrame.graphView_ram = PlotCanvas(MainFrame, width=6, height=2)
         MainFrame.verticalLayout_2.addWidget(MainFrame.graphView_ram)
-
 
         MainFrame.verticalLayoutWidget.raise_()
         MainFrame.verticalLayoutWidget_2.raise_()
@@ -333,15 +329,20 @@ class MainFrame(object):
     def set_text(device_info):
         _translate = QtCore.QCoreApplication.translate
 
+
         try:
             MainFrame.label_ip_v.setText(_translate("MainFrame", device_info.d_ip))
             MainFrame.label_mac_v.setText(_translate("MainFrame", device_info.d_mac))
             MainFrame.label_name_v.setText(_translate("MainFrame", device_info.d_name))
             MainFrame.label_booting_v.setText(_translate("MainFrame", str(device_info.d_boot_t)))
             MainFrame.label_cpu_v.setText(_translate("MainFrame", "percent : " + str(device_info.d_cpu_per) + "%"))
-            MainFrame.label_ram_v.setText(_translate("MainFrame", "percent : " + str(device_info.d_mem_per) + "%  total : " + str(round(device_info.d_mem_total / 1024 / 1024)) + "MB  available : " + str(round(device_info.d_mem_avail / 1024 / 1024)) + "MB"))
+            MainFrame.label_ram_v.setText(_translate("MainFrame",
+                                                     "percent : " + str(device_info.d_mem_per) + "%  total : " + str(
+                                                         round(
+                                                             device_info.d_mem_total / 1024 / 1024)) + "MB  available : " + str(
+                                                         round(device_info.d_mem_avail / 1024 / 1024)) + "MB"))
 
-            if(len(MainFrame.cpu_data) > 10):
+            if (len(MainFrame.cpu_data) > 10):
                 MainFrame.cpu_data.pop(0)
             MainFrame.cpu_data.append(device_info.d_cpu_per)
             MainFrame.graphView_cpu.plot(MainFrame.cpu_data)
@@ -351,13 +352,15 @@ class MainFrame(object):
             MainFrame.ram_data.append(device_info.d_mem_per)
             MainFrame.graphView_ram.plot(MainFrame.ram_data)
 
-            usage_time = datetime.datetime.now() - device_info.d_boot_t
+            usage_time = datetime.datetime.now() - datetime.datetime.strptime(str(device_info.d_boot_t),
+                                                                              '%Y-%m-%d %H:%M:%S')
             usage_ts = usage_time.total_seconds()
             usage_h = int(usage_ts / 3600)
             usage_m = int((usage_ts - (usage_h * 3600)) / 60)
             usage_s = int(usage_ts - (usage_h * 3600) - (usage_m * 60))
 
-            MainFrame.label_usage_v.setText(_translate("MainFrame", str(usage_h) + "시간 " + str(usage_m) + "분 " + str(usage_s) + "초"))
+            MainFrame.label_usage_v.setText(
+                _translate("MainFrame", str(usage_h) + "시간 " + str(usage_m) + "분 " + str(usage_s) + "초"))
         except Exception as e:
             print(e)
 
@@ -381,11 +384,11 @@ class MainFrame(object):
         MainFrame.label_ram.setText(_translate("MainFrame", "RAM"))
         MainFrame.label_usage.setText(_translate("MainFrame", "Usage Time"))
         MainFrame.label_booting.setText(_translate("MainFrame", "Booting Time"))
-        MainFrame.menuConnect.setTitle(_translate("MainFrame","Connect"))
+        MainFrame.menuConnect.setTitle(_translate("MainFrame", "Connect"))
         MainFrame.menuSetting.setTitle(_translate("MainFrame", "Setting"))
         MainFrame.menuHelp.setTitle(_translate("MainFrame", "Help"))
 
-        MainFrame.actionconnect.setText(_translate("MainFrame","login"))
+        MainFrame.actionconnect.setText(_translate("MainFrame", "login"))
         MainFrame.actionexit = MainFrame.menuConnect.addAction('exit')
         MainFrame.actionsetting.setText(_translate("MainFrame", "setting"))
         MainFrame.actionhelp.setText(_translate("MainFrame", "help"))
@@ -393,8 +396,6 @@ class MainFrame(object):
         MainFrame.actionconnect.triggered.connect(LoginFrame.LoginFrame.init)
 
         MainFrame.actionexit.triggered.connect(qApp.quit)
-
-
 
     @staticmethod
     def listwidget_item():
@@ -420,20 +421,23 @@ class MainFrame(object):
             else:
                 item.setText(_translate("MainFrame", i.name))
 
-
     @staticmethod
     def friend_list_click_event():
         for x in MainFrame.listWidget.selectedIndexes():
             ThreadFriendInfoCommunication.u_id = DeviceInfoThread.friend_device_info[x.row()].u_id
             thread_status.selected = x.row()
 
+        MainFrame.cpu_data = [0 for i in range(10)]
+        MainFrame.ram_data = [0 for i in range(10)]
+
     @staticmethod
     def friend_list_double_click_event():
         for x in MainFrame.listWidget.selectedIndexes():
             ModifyProfile.ModifyProfile.init()
-            if x.row()!=0:
+            if x.row() != 0:
                 ModifyProfile.ModifyProfile.hide_button()
-            ModifyProfile.ModifyProfile.set_info(DeviceInfoThread.friend_device_info[x.row()].name,DeviceInfoThread.friend_device_info[x.row()].u_id)
+            ModifyProfile.ModifyProfile.set_info(DeviceInfoThread.friend_device_info[x.row()].name,
+                                                 DeviceInfoThread.friend_device_info[x.row()].u_id)
             print(DeviceInfoThread.friend_device_info[x.row()].u_id)
 
     @staticmethod
@@ -446,7 +450,6 @@ class MainFrame(object):
 
 
 class thread_status(QThread):
-
     selected = 0
 
     def __init__(MainFrame, main_frame):
@@ -465,21 +468,17 @@ class thread_status(QThread):
 class PlotCanvas(FigureCanvas):
     def __init__(MainFrame, parent=None, width=6, height=2, dpi=60):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        MainFrame.axes = fig.add_subplot(1,1,1)
+        MainFrame.axes = fig.add_subplot(1, 1, 1)
 
         FigureCanvas.__init__(MainFrame, fig)
 
         FigureCanvas.setSizePolicy(MainFrame, 100, 20)
         FigureCanvas.updateGeometry(MainFrame)
 
-    def plot(MainFrame,data):
-        ax = MainFrame.figure.add_subplot(1,1,1)
+    def plot(MainFrame, data):
+        ax = MainFrame.figure.add_subplot(1, 1, 1)
         ax.clear()
-        ax.plot(data, 'r-',linewidth=1.5)
+        ax.plot(data, 'r-', linewidth=1.5)
         ax.plot(0)
         ax.plot(100)
         MainFrame.draw()
-
-
-
-
