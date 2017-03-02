@@ -1,25 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import pymongo
-from PyQt5.QtCore import QEvent, pyqtSlot
 from PyQt5.QtCore import Qt
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtCore import QUrl
-
-from AddFriendDialog import AddFriendDialog
 from DeviceinfoThread import DeviceInfoThread
 from FailDialog import FailDialog
 from JoinFrame import JoinFrame
 from model.Device import DeviceInfo
 from model.User import User
-from MongoDao import LoginDao
 from Myhttp import Communication, FriendCommunication
 import webbrowser
 from Util import MyYaml
-
+import MainFrame
 
 class LoginFrame(object):
 
@@ -124,12 +115,13 @@ class LoginFrame(object):
         if result['success']:
             LoginFrame.qwidget.hide()
             User.u_id = my_id
+            setattr(DeviceInfoThread.friend_device_info[0], 'u_id', my_id)
             result = FriendCommunication.friend_list(my_id)
 
             for i in result['friends']:
                 DeviceInfoThread.friend_device_info.append(DeviceInfo(i['op_id'], i['op_id']))
 
-            AddFriendDialog.main_window.listwidget_item()
+            MainFrame.MainFrame.listwidget_item()
 
         else:
             FailDialog.retranslateUi('Fail', result['message'])

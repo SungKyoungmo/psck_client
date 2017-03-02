@@ -10,7 +10,7 @@ from model.Friend import Friend
 
 class DeviceInfo(Friend):
 
-    def __init__(self, name, u_id):
+    def __init__(self, u_name, u_id):
         self.d_boot_t = None
         self.d_name = None
         self.d_ip = None
@@ -19,7 +19,7 @@ class DeviceInfo(Friend):
         self.d_mem_total = None
         self.d_mem_avail = None
         self.d_mem_per = None
-        super().__init__(name, u_id)
+        super().__init__(u_name, u_id)
 
     def __setattr__(self, *args, **kwargs):
         return super().__setattr__(*args, **kwargs)

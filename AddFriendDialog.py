@@ -13,7 +13,7 @@ from DeviceinfoThread import DeviceInfoThread
 from Myhttp import FriendCommunication
 from model.Device import DeviceInfo
 from model.User import User
-
+import MainFrame
 
 class AddFriendDialog(object):
 
@@ -84,7 +84,7 @@ class AddFriendDialog(object):
             DeviceInfoThread.friend_device_info.append(
             DeviceInfo(AddFriendDialog.lineEdit.text(), AddFriendDialog.lineEdit.text()))
 
-            AddFriendDialog.main_window.listwidget_item()
+            MainFrame.MainFrame.listwidget_item()
 
             AddFriendDialog.widget_hide()
         else:
