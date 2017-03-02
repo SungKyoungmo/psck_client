@@ -12,8 +12,8 @@ from model.User import User
 
 
 class Communication(object):
-    # url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
-    url = "http://127.0.0.1:3000"
+    url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
+    # url = "http://127.0.0.1:3000"
 
     info = DeviceInfo('1', '1')
 
@@ -76,8 +76,8 @@ class Communication(object):
 
 
 class FriendCommunication(object):
-    # url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
-    url = "http://127.0.0.1:3000"
+    url = "http://" + MyYaml.node_js_host + ":" + str(MyYaml.node_js_port)
+    # url = "http://127.0.0.1:3000"
 
     @staticmethod
     def add(my_id, add_id):
