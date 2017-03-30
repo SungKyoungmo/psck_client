@@ -26,7 +26,6 @@ class LoginFrame(object):
 
         LoginFrame.qwidget.setObjectName("Form")
         LoginFrame.qwidget.resize(400, 300)
-
         LoginFrame.verticalLayoutWidget = QtWidgets.QWidget(LoginFrame.qwidget)
         LoginFrame.verticalLayoutWidget.setGeometry(QtCore.QRect(50, 60, 345, 151))
         LoginFrame.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
